@@ -29,6 +29,7 @@
 
 #include <sbpl/planners/araplanner.h>
 
+#include <iostream>
 #include <algorithm>
 #include <cassert>
 #include <cmath>
@@ -40,10 +41,12 @@
 #include <sbpl/utils/list.h>
 
 using namespace std;
+
 std::vector<int> _goalsID;
 unsigned long int _track_compute=0;
 bool _goal_found=false;
 bool _start_search=false;
+
 
 ARAPlanner::ARAPlanner(DiscreteSpaceInformation* environment, bool bSearchForward)
 {
@@ -300,26 +303,29 @@ void ARAPlanner::UpdateSuccs(ARAState* state, ARASearchStateSpace_t* pSearchStat
     vector<int> CostV;
     CKey key;
     ARAState *succstate;
-
     environment_->GetSuccs(state->MDPstate->StateID, &SuccIDV, &CostV);
 
     if ( _track_compute == 0 && _goal_found==false) {
-        for (int sind = 0; sind < (int)SuccIDV.size(); sind++) {
-            for (int k=0;k<_goalsID.size();k++) {
-                if ( _goalsID[k] == SuccIDV[sind] ) {
-                    std::cout << "goal found : indice "<< k << std::endl;
-                    _goal_found=true;
-                    set_goal(_goalsID[k]);
-                    ARAState* searchgoalstate = (ARAState*)(pSearchStateSpace->searchgoalstate->PlannerSpecificData);
-                    if (searchgoalstate->callnumberaccessed != pSearchStateSpace->callnumber) {
-                        ReInitializeSearchStateInfo(searchgoalstate, pSearchStateSpace);
-                    }
-                }    
-            }
+
+   // std::cout << "SuccIDV.size() & _goalsID.size() : "<< SuccIDV.size() <<" & "<< _goalsID.size() << std::endl;
+
+    for (int sind = 0; sind < (int)SuccIDV.size(); sind++) {
+        for (int k=0;k<_goalsID.size();k++) {
+            if ( _goalsID[k] == SuccIDV[sind] ) {
+                std::cout << "goal found : indice "<< k << std::endl;
+                _goal_found=true;
+                set_goal(_goalsID[k]);
+                ARAState* searchgoalstate = (ARAState*)(pSearchStateSpace->searchgoalstate->PlannerSpecificData);
+                if (searchgoalstate->callnumberaccessed != pSearchStateSpace->callnumber) {
+                ReInitializeSearchStateInfo(searchgoalstate, pSearchStateSpace);
+                }
+            }    
+
         }
     }
+    }
 
-    //iterate through predecessors of s
+    //iterate through successors of s
     for (int sind = 0; sind < (int)SuccIDV.size(); sind++) {
         CMDPSTATE* SuccMDPState = GetState(SuccIDV[sind], pSearchStateSpace);
         int cost = CostV[sind];
@@ -625,7 +631,7 @@ void ARAPlanner::ReInitializeSearchStateSpace(ARASearchStateSpace_t* pSearchStat
         ReInitializeSearchStateInfo(startstateinfo, pSearchStateSpace);
     }
     startstateinfo->g = 0;
-    
+
     //initialize goal state
     ARAState* searchgoalstate = (ARAState*)(pSearchStateSpace->searchgoalstate->PlannerSpecificData);
     if (searchgoalstate->callnumberaccessed != pSearchStateSpace->callnumber) {
@@ -674,16 +680,19 @@ int ARAPlanner::SetSearchGoalState(int SearchGoalStateID, ARASearchStateSpace_t*
         pSearchStateSpace->searchgoalstate = GetState(SearchGoalStateID, pSearchStateSpace);
 
         //should be new search iteration
+        if ( _track_compute == 0 && _goal_found == false) { }
+        else {
         pSearchStateSpace->eps_satisfied = INFINITECOST;
         pSearchStateSpace->bNewSearchIteration = true;
         pSearchStateSpace_->eps = this->finitial_eps;
+        
 
 #if USE_HEUR
         //recompute heuristic for the heap if heuristics is used
         pSearchStateSpace->bReevaluatefvals = true;
 #endif
     }
-
+    }
     return 1;
 }
 
@@ -922,6 +931,7 @@ vector<int> ARAPlanner::GetSearchPath(ARASearchStateSpace_t* pSearchStateSpace, 
 bool ARAPlanner::Search(ARASearchStateSpace_t* pSearchStateSpace, vector<int>& pathIds, int & PathCost,
                         bool bFirstSolution, bool bOptimalSolution, double MaxNumofSecs)
 {
+    _start_search=true;
     CKey key;
     TimeStarted = clock();
     searchexpands = 0;
@@ -934,7 +944,8 @@ bool ARAPlanner::Search(ARASearchStateSpace_t* pSearchStateSpace, vector<int>& p
     SBPL_FPRINTF(fDeb, "new search call (call number=%d)\n", pSearchStateSpace->callnumber);
 #endif
 
-    if (pSearchStateSpace->bReevaluatefvals) {
+    // looks like we don't use that
+    if (pSearchStateSpace->bReevaluatefvals) { 
         // costs have changed or a new goal has been set
         environment_->EnsureHeuristicsUpdated(bforwardsearch);
         Reevaluatehvals(pSearchStateSpace);
@@ -991,6 +1002,7 @@ bool ARAPlanner::Search(ARASearchStateSpace_t* pSearchStateSpace, vector<int>& p
         //improve or compute path
         if (ImprovePath(pSearchStateSpace, MaxNumofSecs) == 1) {
             pSearchStateSpace->eps_satisfied = pSearchStateSpace->eps;
+            _track_compute+=1;
         }
 
         //print the solution cost and eps bound
@@ -1117,13 +1129,14 @@ int ARAPlanner::replan(double allocated_time_secs, vector<int>* solution_stateID
 
 int ARAPlanner::set_goal(int goal_stateID)
 {
-    std::cout << "setting goal for ara* : Id " << goal_stateID << std::endl;
+    std::cout << std::endl << "setting goal for ara* : Id " << goal_stateID << std::endl;
     SBPL_PRINTF("planner: setting goal to %d\n", goal_stateID);
     environment_->PrintState(goal_stateID, true, stdout);
-    
-   if (_start_search == false ) {
+
+    if (_start_search == false ) {
     _goalsID.push_back(goal_stateID);
     }
+   // std::cout << "_goalsID.size() : " << _goalsID.size() << std::endl;
 
     if (bforwardsearch) {
         if (SetSearchGoalState(goal_stateID, pSearchStateSpace_) != 1) {
@@ -1137,7 +1150,6 @@ int ARAPlanner::set_goal(int goal_stateID)
             return 0;
         }
     }
-
     return 1;
 }
 
