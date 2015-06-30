@@ -40,6 +40,10 @@
 #include <sbpl/utils/list.h>
 
 using namespace std;
+std::vector<int> _goalsID;
+unsigned long int _track_compute=0;
+bool _goal_found=false;
+bool _start_search=false;
 
 ARAPlanner::ARAPlanner(DiscreteSpaceInformation* environment, bool bSearchForward)
 {
@@ -298,6 +302,22 @@ void ARAPlanner::UpdateSuccs(ARAState* state, ARASearchStateSpace_t* pSearchStat
     ARAState *succstate;
 
     environment_->GetSuccs(state->MDPstate->StateID, &SuccIDV, &CostV);
+
+    if ( _track_compute == 0 && _goal_found==false) {
+        for (int sind = 0; sind < (int)SuccIDV.size(); sind++) {
+            for (int k=0;k<_goalsID.size();k++) {
+                if ( _goalsID[k] == SuccIDV[sind] ) {
+                    std::cout << "goal found : indice "<< k << std::endl;
+                    _goal_found=true;
+                    set_goal(_goalsID[k]);
+                    ARAState* searchgoalstate = (ARAState*)(pSearchStateSpace->searchgoalstate->PlannerSpecificData);
+                    if (searchgoalstate->callnumberaccessed != pSearchStateSpace->callnumber) {
+                        ReInitializeSearchStateInfo(searchgoalstate, pSearchStateSpace);
+                    }
+                }    
+            }
+        }
+    }
 
     //iterate through predecessors of s
     for (int sind = 0; sind < (int)SuccIDV.size(); sind++) {
@@ -1097,8 +1117,13 @@ int ARAPlanner::replan(double allocated_time_secs, vector<int>* solution_stateID
 
 int ARAPlanner::set_goal(int goal_stateID)
 {
+    std::cout << "setting goal for ara* : Id " << goal_stateID << std::endl;
     SBPL_PRINTF("planner: setting goal to %d\n", goal_stateID);
     environment_->PrintState(goal_stateID, true, stdout);
+    
+   if (_start_search == false ) {
+    _goalsID.push_back(goal_stateID);
+    }
 
     if (bforwardsearch) {
         if (SetSearchGoalState(goal_stateID, pSearchStateSpace_) != 1) {
