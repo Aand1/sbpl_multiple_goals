@@ -312,7 +312,7 @@ void ARAPlanner::UpdateSuccs(ARAState* state, ARASearchStateSpace_t* pSearchStat
     for (int sind = 0; sind < (int)SuccIDV.size(); sind++) {
         for (int k=0;k<_goalsID.size();k++) {
             if ( _goalsID[k] == SuccIDV[sind] ) {
-                std::cout << "goal found : indice "<< k << std::endl;
+              //  std::cout << "goal found : indice "<< k << std::endl;
                 _goal_found=true;
                 set_goal(_goalsID[k]);
                 ARAState* searchgoalstate = (ARAState*)(pSearchStateSpace->searchgoalstate->PlannerSpecificData);
@@ -1129,7 +1129,7 @@ int ARAPlanner::replan(double allocated_time_secs, vector<int>* solution_stateID
 
 int ARAPlanner::set_goal(int goal_stateID)
 {
-    std::cout << std::endl << "setting goal for ara* : Id " << goal_stateID << std::endl;
+   // std::cout << std::endl << "setting goal for ara* : Id " << goal_stateID << std::endl;
     SBPL_PRINTF("planner: setting goal to %d\n", goal_stateID);
     environment_->PrintState(goal_stateID, true, stdout);
 
