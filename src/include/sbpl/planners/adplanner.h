@@ -39,7 +39,7 @@
 //---configuration----
 //control of EPS
 //initial suboptimality bound (cost solution <= cost(eps*cost optimal solution)
-#define AD_DEFAULT_INITIAL_EPS	    10.0
+#define AD_DEFAULT_INITIAL_EPS	    5.0
 //as planning time exist, AD* decreases epsilon bound
 #define AD_DECREASE_EPS    0.2
 //final epsilon bound

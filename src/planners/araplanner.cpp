@@ -977,6 +977,7 @@ bool ARAPlanner::Search(ARASearchStateSpace_t* pSearchStateSpace, vector<int>& p
     {
         loop_time = clock();
         //decrease eps for all subsequent iterations
+
         if (fabs(pSearchStateSpace->eps_satisfied - pSearchStateSpace->eps) < ERR_EPS && !bFirstSolution) {
             pSearchStateSpace->eps = pSearchStateSpace->eps - dec_eps;
             if (pSearchStateSpace->eps < final_epsilon)

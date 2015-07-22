@@ -281,7 +281,8 @@ std::string CheckPlannerType(int numOptions, char** argv)
             return s;
         }
     }
-    return std::string("arastar");
+     return std::string("arastar");
+
 }
 
 /*******************************************************************************

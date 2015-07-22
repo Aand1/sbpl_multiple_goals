@@ -33,8 +33,14 @@
 #include <sbpl/utils/heap.h>
 #include <sbpl/utils/list.h>
 #include <sbpl/utils/mdpconfig.h>
+#include <iostream>
 
 using namespace std;
+
+std::vector<int> _goalsID_ad;
+unsigned long int _track_compute_ad=0;
+bool _goal_found_ad=false;
+bool _start_search_ad=false;
 
 //-----------------------------------------------------------------------------------------------------
 
@@ -378,6 +384,26 @@ void ADPlanner::UpdateSuccsofOverconsState(ADState* state, ADSearchStateSpace_t*
 
     environment_->GetSuccs(state->MDPstate->StateID, &SuccIDV, &CostV);
 
+    if ( _track_compute_ad == 0 && _goal_found_ad==false) {
+
+  //  std::cout << "SuccIDV.size() & _goalsID_ad.size() : "<< SuccIDV.size() <<" & "<< _goalsID_ad.size() << std::endl;
+
+    for (int sind = 0; sind < (int)SuccIDV.size(); sind++) {
+        for (int k=0;k<_goalsID_ad.size();k++) {
+            if ( _goalsID_ad[k] == SuccIDV[sind] ) {
+              //  std::cout << "goal found : indice "<< k << std::endl;
+                _goal_found_ad=true;
+                set_goal(_goalsID_ad[k]);
+                ADState* searchgoalstate = (ADState*)(pSearchStateSpace->searchgoalstate->PlannerSpecificData);
+                if (searchgoalstate->callnumberaccessed != pSearchStateSpace->callnumber) {
+                ReInitializeSearchStateInfo(searchgoalstate, pSearchStateSpace);
+                }
+            }    
+
+        }
+    }
+    }
+
     //iterate through predecessors of s
     for (int sind = 0; sind < (int)SuccIDV.size(); sind++) {
         CMDPSTATE* SuccMDPState = GetState(SuccIDV[sind], pSearchStateSpace);
@@ -444,6 +470,26 @@ void ADPlanner::UpdateSuccsofUnderconsState(ADState* state, ADSearchStateSpace_t
     ADState *succstate;
 
     environment_->GetSuccs(state->MDPstate->StateID, &SuccIDV, &CostV);
+
+    if ( _track_compute_ad == 0 && _goal_found_ad==false) {
+
+  //  std::cout << "SuccIDV.size() & _goalsID_ad.size() : "<< SuccIDV.size() <<" & "<< _goalsID_ad.size() << std::endl;
+
+    for (int sind = 0; sind < (int)SuccIDV.size(); sind++) {
+        for (int k=0;k<_goalsID_ad.size();k++) {
+            if ( _goalsID_ad[k] == SuccIDV[sind] ) {
+              //  std::cout << "goal found : indice "<< k << std::endl;
+                _goal_found_ad=true;
+                set_goal(_goalsID_ad[k]);
+                ADState* searchgoalstate = (ADState*)(pSearchStateSpace->searchgoalstate->PlannerSpecificData);
+                if (searchgoalstate->callnumberaccessed != pSearchStateSpace->callnumber) {
+                ReInitializeSearchStateInfo(searchgoalstate, pSearchStateSpace);
+                }
+            }    
+
+        }
+    }
+    }
 
     //iterate through predecessors of s
     for (int sind = 0; sind < (int)SuccIDV.size(); sind++) {
@@ -808,6 +854,8 @@ int ADPlanner::SetSearchGoalState(int SearchGoalStateID, ADSearchStateSpace_t* p
     {
         pSearchStateSpace->searchgoalstate = GetState(SearchGoalStateID, pSearchStateSpace);
 
+    if ( _track_compute_ad == 0 && _goal_found_ad == false) { }
+    else {
         //current solution may be invalid
         pSearchStateSpace->eps_satisfied = INFINITECOST;
         pSearchStateSpace_->eps = this->finitial_eps;
@@ -822,7 +870,7 @@ int ADPlanner::SetSearchGoalState(int SearchGoalStateID, ADSearchStateSpace_t* p
         pSearchStateSpace->bReevaluatefvals = true;
 #endif
     }
-
+}
     return 1;
 }
 
@@ -1098,6 +1146,7 @@ vector<int> ADPlanner::GetSearchPath(ADSearchStateSpace_t* pSearchStateSpace, in
 bool ADPlanner::Search(ADSearchStateSpace_t* pSearchStateSpace, vector<int>& pathIds, int & PathCost,
                        bool bFirstSolution, bool bOptimalSolution, double MaxNumofSecs)
 {
+    _start_search_ad=true;
     CKey key;
     TimeStarted = clock();
     searchexpands = 0;
@@ -1163,6 +1212,7 @@ bool ADPlanner::Search(ADSearchStateSpace_t* pSearchStateSpace, vector<int>& pat
         //improve or compute path
         if (ComputePath(pSearchStateSpace, MaxNumofSecs) == 1) {
             pSearchStateSpace->eps_satisfied = pSearchStateSpace->eps;
+            _track_compute_ad+=1;
         }
 
         //print the solution cost and eps bound
@@ -1356,6 +1406,11 @@ int ADPlanner::set_goal(int goal_stateID)
     SBPL_PRINTF("planner: setting goal to %d\n", goal_stateID);
     environment_->PrintState(goal_stateID, true, stdout);
 
+    if (_start_search_ad == false ) {
+    _goalsID_ad.push_back(goal_stateID);
+    }
+    // std::cout << "_goalsID_ad.size() : " << _goalsID_ad.size() << std::endl;
+
     if (bforwardsearch) {
         if (SetSearchGoalState(goal_stateID, pSearchStateSpace_) != 1) {
             SBPL_ERROR("ERROR: failed to set search goal state\n");
@@ -1418,6 +1473,12 @@ int ADPlanner::force_planning_from_scratch()
 
 int ADPlanner::force_planning_from_scratch_and_free_memory()
 {
+
+    _goalsID_ad.clear();
+    _track_compute_ad=0;
+    _goal_found_ad=false;
+    _start_search_ad=false;
+
     SBPL_PRINTF("planner: forceplanfromscratch set\n");
     int start_id = -1;
     int goal_id = -1;
