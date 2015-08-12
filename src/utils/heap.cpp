@@ -27,8 +27,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <sbpl/sbpl_exception.h>
-#include <sbpl/utils/heap.h>
+#include <sbplmg/sbpl_exception.h>
+#include <sbplmg/utils/heap.h>
 
 using namespace std;
 

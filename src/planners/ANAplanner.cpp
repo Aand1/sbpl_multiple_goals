@@ -7,10 +7,10 @@
  */
 
 #include <cmath>
-#include <sbpl/discrete_space_information/environment.h>
-#include <sbpl/planners/ANAplanner.h>
-#include <sbpl/utils/heap.h>
-#include <sbpl/utils/list.h>
+#include <sbplmg/discrete_space_information/environment.h>
+#include <sbplmg/planners/ANAplanner.h>
+#include <sbplmg/utils/heap.h>
+#include <sbplmg/utils/list.h>
 
 using namespace std;
 

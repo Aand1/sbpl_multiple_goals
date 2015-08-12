@@ -32,9 +32,9 @@
 
 #include <cstdio>
 #include <ctime>
-#include <sbpl/planners/planner.h>
-#include <sbpl/utils/key.h>
-#include <sbpl/utils/mdp.h>
+#include <sbplmg/planners/planner.h>
+#include <sbplmg/utils/key.h>
+#include <sbplmg/utils/mdp.h>
 
 //---configuration----
 //control of EPS
@@ -356,7 +356,7 @@ protected:
 };
 
 /**
- * \brief See comments in sbpl/src/planners/planner.h about the what and why of
+ * \brief See comments in sbplmg/src/planners/planner.h about the what and why of
  *        this class.
  */
 class StateChangeQuery

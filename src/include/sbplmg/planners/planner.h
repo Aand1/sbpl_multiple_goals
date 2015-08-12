@@ -32,7 +32,7 @@
 
 #include <cstddef>
 #include <vector>
-#include <sbpl/config.h>
+#include <sbplmg/config.h>
 
 #define 	GETSTATEIND(stateid, mapid) StateID2IndexMapping[mapid][stateid]
 
@@ -65,7 +65,7 @@ class DiscreteSpaceInformation;
 
  * At the moment, ADPlanner is the only one who really uses the
  * detailed information provided by ChangedCellsGetter, so we define
- * that class in sbpl/src/planners/ADStar/adplanner.h (to be moved up
+ * that class in sbplmg/src/planners/ADStar/adplanner.h (to be moved up
  * the hierarchy when we generalize).
  */
 class StateChangeQuery;

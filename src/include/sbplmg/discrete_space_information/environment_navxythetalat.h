@@ -32,8 +32,8 @@
 
 #include <cstdio>
 #include <vector>
-#include <sbpl/discrete_space_information/environment.h>
-#include <sbpl/utils/utils.h>
+#include <sbplmg/discrete_space_information/environment.h>
+#include <sbplmg/utils/utils.h>
 
 //eight-connected grid
 #define NAVXYTHETALAT_DXYWIDTH 8

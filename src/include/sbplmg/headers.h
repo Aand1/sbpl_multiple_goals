@@ -30,8 +30,8 @@
 #ifndef __HEADERS_H_
 #define __HEADERS_H_
 
-#include <sbpl/sbpl_exception.h>
-#include <sbpl/config.h>
+#include <sbplmg/sbpl_exception.h>
+#include <sbplmg/config.h>
 
 #if MEM_CHECK == 1
 #define _CRTDBG_MAP_ALLOC 
@@ -43,31 +43,31 @@
 #include <crtdbg.h>
 #endif
 
-#include <sbpl/discrete_space_information/environment.h>
-#include <sbpl/discrete_space_information/environment_nav2D.h>
-#include <sbpl/discrete_space_information/environment_nav2Duu.h>
-#include <sbpl/discrete_space_information/environment_navxythetalat.h>
-#include <sbpl/discrete_space_information/environment_navxythetamlevlat.h>
-#include <sbpl/discrete_space_information/environment_robarm.h>
-#include <sbpl/discrete_space_information/environment_XXX.h>
-#include <sbpl/planners/adplanner.h>
-#include <sbpl/planners/ANAplanner.h>
-#include <sbpl/planners/araplanner.h>
-#include <sbpl/planners/planner.h>
-#include <sbpl/planners/ppcpplanner.h>
-#include <sbpl/planners/rstarplanner.h>
-#include <sbpl/planners/viplanner.h>
-#include <sbpl/planners/lazyARA.h>
-#include <sbpl/utils/2Dgridsearch.h>
-#include <sbpl/utils/heap.h>
-#include <sbpl/utils/list.h>
-#include <sbpl/utils/key.h>
-#include <sbpl/utils/mdp.h>
-#include <sbpl/utils/mdpconfig.h>
-#include <sbpl/utils/sbpl_fifo.h>
-#include <sbpl/utils/sbpl_bfs_2d.h>
-#include <sbpl/utils/sbpl_bfs_3d.h>
-#include <sbpl/utils/utils.h>
+#include <sbplmg/discrete_space_information/environment.h>
+#include <sbplmg/discrete_space_information/environment_nav2D.h>
+#include <sbplmg/discrete_space_information/environment_nav2Duu.h>
+#include <sbplmg/discrete_space_information/environment_navxythetalat.h>
+#include <sbplmg/discrete_space_information/environment_navxythetamlevlat.h>
+#include <sbplmg/discrete_space_information/environment_robarm.h>
+#include <sbplmg/discrete_space_information/environment_XXX.h>
+#include <sbplmg/planners/adplanner.h>
+#include <sbplmg/planners/ANAplanner.h>
+#include <sbplmg/planners/araplanner.h>
+#include <sbplmg/planners/planner.h>
+#include <sbplmg/planners/ppcpplanner.h>
+#include <sbplmg/planners/rstarplanner.h>
+#include <sbplmg/planners/viplanner.h>
+#include <sbplmg/planners/lazyARA.h>
+#include <sbplmg/utils/2Dgridsearch.h>
+#include <sbplmg/utils/heap.h>
+#include <sbplmg/utils/list.h>
+#include <sbplmg/utils/key.h>
+#include <sbplmg/utils/mdp.h>
+#include <sbplmg/utils/mdpconfig.h>
+#include <sbplmg/utils/sbpl_fifo.h>
+#include <sbplmg/utils/sbpl_bfs_2d.h>
+#include <sbplmg/utils/sbpl_bfs_3d.h>
+#include <sbplmg/utils/utils.h>
 
 #endif
 

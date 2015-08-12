@@ -29,9 +29,9 @@
 
 #include <cstdlib>
 #include <cstring>
-#include <sbpl/discrete_space_information/environment_nav2Duu.h>
-#include <sbpl/utils/mdp.h>
-#include <sbpl/utils/mdpconfig.h>
+#include <sbplmg/discrete_space_information/environment_nav2Duu.h>
+#include <sbplmg/utils/mdp.h>
+#include <sbplmg/utils/mdpconfig.h>
 
 using namespace std;
 

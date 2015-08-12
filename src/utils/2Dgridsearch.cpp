@@ -29,9 +29,9 @@
 
 #include <cstdio>
 #include <ctime>
-#include <sbpl/utils/2Dgridsearch.h>
-#include <sbpl/utils/heap.h>
-#include <sbpl/utils/list.h>
+#include <sbplmg/utils/2Dgridsearch.h>
+#include <sbplmg/utils/heap.h>
+#include <sbplmg/utils/list.h>
 
 using namespace std;
 

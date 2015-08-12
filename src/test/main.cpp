@@ -33,7 +33,7 @@
 
 using namespace std;
 
-#include <sbpl/headers.h>
+#include <sbplmg/headers.h>
 
 enum PlannerType
 {
@@ -195,9 +195,9 @@ void PrintHelp(char** argv)
     printf("                          is \"backwards\".\n");
     printf("<search_t>                One of backward, forward.\n");
     printf("<env cfg>                 Config file representing the environment configuration.\n");
-    printf("                          See sbpl/env_examples/ for examples.\n");
+    printf("                          See sbplmg/env_examples/ for examples.\n");
     printf("[mot prim]                (optional) Motion primitives file for x,y,theta lattice\n");
-    printf("                          planning. See sbpl/matlab/mprim/ for examples.\n");
+    printf("                          planning. See sbplmg/matlab/mprim/ for examples.\n");
     printf("                          NOTE: resolution of motion primtives should match that\n");
     printf("                              of the config file.\n");
     printf("                          NOTE: optional use of these for x,y,theta planning is\n");
@@ -291,7 +291,7 @@ std::string CheckPlannerType(int numOptions, char** argv)
  *
  * @param plannerType The type of planner to be used in this example
  * @param envCfgFilename The environment config file. See
- *                       sbpl/env_examples/nav2d/ for examples
+ *                       sbplmg/env_examples/nav2d/ for examples
  * @return 1 if the planner successfully found a solution; 0 otherwise
  *******************************************************************************/
 int plan2d(PlannerType plannerType, char* envCfgFilename, bool forwardSearch)
@@ -399,7 +399,7 @@ int plan2d(PlannerType plannerType, char* envCfgFilename, bool forwardSearch)
  *
  * @param plannerType The type of planner to be used in this example
  * @param envCfgFilename The environment config file. See
- *                       sbpl/env_examples/nav2duu/ for examples
+ *                       sbplmg/env_examples/nav2duu/ for examples
  * @return 1 if the planner successfully found a solution; 0 otherwise
  *******************************************************************************/
 int plan2duu(PlannerType plannerType, char* envCfgFilename)
@@ -459,9 +459,9 @@ int plan2duu(PlannerType plannerType, char* envCfgFilename)
  *
  * @param plannerType The type of planner to be used in this example
  * @param envCfgFilename The environment config file. See
- *                       sbpl/env_examples/nav3d/ for examples
+ *                       sbplmg/env_examples/nav3d/ for examples
  * @param motPrimFilename The motion primitives file. See
- *                        sbpl/matlab/mprim/ for examples
+ *                        sbplmg/matlab/mprim/ for examples
  * @return 1 if the planner successfully found a solution; 0 otherwise
  *******************************************************************************/
 int planxythetalat(PlannerType plannerType, char* envCfgFilename, char* motPrimFilename, bool forwardSearch)
@@ -610,9 +610,9 @@ int planxythetalat(PlannerType plannerType, char* envCfgFilename, char* motPrimF
  *       navigation of a tall ground robot operating in a cluttered 3d map.
  * @param plannerType The type of planner to be used in this example
  * @param envCfgFilename The environment config file. See
- *                       sbpl/env_examples/nav3d/ for examples
+ *                       sbplmg/env_examples/nav3d/ for examples
  * @param motPrimFilename The motion primitives file. See
- *                        sbpl/matlab/mprim/ for examples
+ *                        sbplmg/matlab/mprim/ for examples
  * @return 1 if the planner successfully found a solution; 0 otherwise
  *******************************************************************************/
 int planxythetamlevlat(PlannerType plannerType, char* envCfgFilename, char* motPrimFilename, bool forwardSearch)
@@ -801,7 +801,7 @@ int planxythetamlevlat(PlannerType plannerType, char* envCfgFilename, char* motP
  *
  * @param planner The planner to be used in this example
  * @param envCfgFilename The environment config file. See
- *                       sbpl/env_examples/nav2d/ for examples
+ *                       sbplmg/env_examples/nav2d/ for examples
  *******************************************************************************/
 int planandnavigate2d(PlannerType plannerType, char* envCfgFilename)
 {
@@ -1077,7 +1077,7 @@ int planandnavigate2d(PlannerType plannerType, char* envCfgFilename)
  *        planning.
  *
  * @param envCfgFilename The environment config file. See
- *                       sbpl/env_examples/nav3d/ for examples
+ *                       sbplmg/env_examples/nav3d/ for examples
  *******************************************************************************/
 int planandnavigatexythetalat(PlannerType plannerType, char* envCfgFilename, char* motPrimFilename, bool forwardSearch)
 {
@@ -1462,7 +1462,7 @@ int planandnavigatexythetalat(PlannerType plannerType, char* envCfgFilename, cha
  * planrobarm - An example of planning a robot arm with six degrees-of-freedom.
  *
  * @param envCfgFilename The environment config file. See
- *                       sbpl/env_examples/robarm for examples
+ *                       sbplmg/env_examples/robarm for examples
  * @return 1 if the planner successfully found a solution; 0 otherwise
  *******************************************************************************/
 int planrobarm(PlannerType plannerType, char* envCfgFilename, bool forwardSearch)

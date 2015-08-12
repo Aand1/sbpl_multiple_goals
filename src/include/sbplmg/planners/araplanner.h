@@ -33,8 +33,8 @@
 #include <cstdio>
 #include <ctime>
 #include <vector>
-#include <sbpl/planners/planner.h>
-#include <sbpl/utils/mdp.h>
+#include <sbplmg/planners/planner.h>
+#include <sbplmg/utils/mdp.h>
 
 //---configuration----
 //control of EPS

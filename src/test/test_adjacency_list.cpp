@@ -2,7 +2,7 @@
 #include <iostream>
 using namespace std;
 
-#include <sbpl/discrete_space_information/environment_precomputed_adjacency_list.h>
+#include <sbplmg/discrete_space_information/environment_precomputed_adjacency_list.h>
 
 // 2d Points
 struct Point2D

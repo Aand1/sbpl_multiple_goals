@@ -8,12 +8,12 @@
 #include <map>
 #include <utility>
 #include <vector>
-#include <sbpl/discrete_space_information/environment.h>
-#include <sbpl/sbpl_exception.h>
-#include <sbpl/planners/araplanner.h>
-#include <sbpl/planners/planner.h>
-#include <sbpl/utils/mdp.h>
-#include <sbpl/utils/mdpconfig.h>
+#include <sbplmg/discrete_space_information/environment.h>
+#include <sbplmg/sbpl_exception.h>
+#include <sbplmg/planners/araplanner.h>
+#include <sbplmg/planners/planner.h>
+#include <sbplmg/utils/mdp.h>
+#include <sbplmg/utils/mdpconfig.h>
 
 struct Adjacency
 {

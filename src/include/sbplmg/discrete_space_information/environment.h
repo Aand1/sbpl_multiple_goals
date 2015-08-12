@@ -32,8 +32,8 @@
 
 #include <cstdio>
 #include <vector>
-#include <sbpl/config.h>
-#include <sbpl/sbpl_exception.h>
+#include <sbplmg/config.h>
+#include <sbplmg/sbpl_exception.h>
 
 class CMDPSTATE;
 struct MDPConfig;

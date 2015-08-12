@@ -31,10 +31,10 @@
 #define __PPCPPLANNER_H_
 
 #include <cstdio>
-#include <sbpl/sbpl_exception.h>
-#include <sbpl/planners/planner.h>
-#include <sbpl/utils/mdp.h>
-#include <sbpl/utils/utils.h>
+#include <sbplmg/sbpl_exception.h>
+#include <sbplmg/planners/planner.h>
+#include <sbplmg/utils/mdp.h>
+#include <sbplmg/utils/utils.h>
 
 class DiscreteSpaceInformation;
 class StateChangeQuery;

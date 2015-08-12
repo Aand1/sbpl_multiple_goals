@@ -31,10 +31,10 @@
 #include <cstdlib>
 #include <cstring>
 #include <ctime>
-#include <sbpl/discrete_space_information/environment_nav2D.h>
-#include <sbpl/planners/planner.h>
-#include <sbpl/utils/mdp.h>
-#include <sbpl/utils/mdpconfig.h>
+#include <sbplmg/discrete_space_information/environment_nav2D.h>
+#include <sbplmg/planners/planner.h>
+#include <sbplmg/utils/mdp.h>
+#include <sbplmg/utils/mdpconfig.h>
 
 using namespace std;
 

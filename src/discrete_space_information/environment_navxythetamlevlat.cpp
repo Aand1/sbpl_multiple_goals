@@ -29,8 +29,8 @@
 
 #include <cstdio>
 #include <ctime>
-#include <sbpl/discrete_space_information/environment_navxythetamlevlat.h>
-#include <sbpl/utils/key.h>
+#include <sbplmg/discrete_space_information/environment_navxythetamlevlat.h>
+#include <sbplmg/utils/key.h>
 
 using namespace std;
 
