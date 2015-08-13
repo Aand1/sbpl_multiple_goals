@@ -1,3 +1,18 @@
+#sbplmg
+
+This is a modified version of sbpl to add multiple goals. The original ReadMe is below. 
+The modifications are :
+l40
+ADPlanner::UpdateSuccsofOverconsState l389
+ADPlanner::UpdateSuccsofUnderconsState l474
+ADPlanner::set_goal l1407
+
+It's just a few lines, so it will be easy to adapt the newest versions.
+This improvement isn't really nice but is light.
+I'm keeping a vector of the goals ids; each time the succesors are updated, it checks if one of these is one of the goals.
+If it is, it rewrites the 'final goal' (which was by default the last of the vector ) and the search continue with a classic single goal.
+
+
 I. Building, Installing, and Using SBPL
 
     SBPL is available as a standalone software library. SBPL itself has no
