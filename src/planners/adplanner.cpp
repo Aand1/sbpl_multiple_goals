@@ -37,6 +37,7 @@
 
 using namespace std;
 
+// Modifications from sbpl
 std::vector<int> _goalsID_ad;
 unsigned long int _track_compute_ad=0;
 bool _goal_found_ad=false;
@@ -383,11 +384,10 @@ void ADPlanner::UpdateSuccsofOverconsState(ADState* state, ADSearchStateSpace_t*
     ADState *succstate;
 
     environment_->GetSuccs(state->MDPstate->StateID, &SuccIDV, &CostV);
+    
 
+    // Modifications from sbpl
     if ( _track_compute_ad == 0 && _goal_found_ad==false) {
-
-  //  std::cout << "SuccIDV.size() & _goalsID_ad.size() : "<< SuccIDV.size() <<" & "<< _goalsID_ad.size() << std::endl;
-
     for (int sind = 0; sind < (int)SuccIDV.size(); sind++) {
         for (int k=0;k<_goalsID_ad.size();k++) {
             if ( _goalsID_ad[k] == SuccIDV[sind] ) {
@@ -471,10 +471,8 @@ void ADPlanner::UpdateSuccsofUnderconsState(ADState* state, ADSearchStateSpace_t
 
     environment_->GetSuccs(state->MDPstate->StateID, &SuccIDV, &CostV);
 
+    // Modifications from sbpl
     if ( _track_compute_ad == 0 && _goal_found_ad==false) {
-
-  //  std::cout << "SuccIDV.size() & _goalsID_ad.size() : "<< SuccIDV.size() <<" & "<< _goalsID_ad.size() << std::endl;
-
     for (int sind = 0; sind < (int)SuccIDV.size(); sind++) {
         for (int k=0;k<_goalsID_ad.size();k++) {
             if ( _goalsID_ad[k] == SuccIDV[sind] ) {
@@ -486,10 +484,10 @@ void ADPlanner::UpdateSuccsofUnderconsState(ADState* state, ADSearchStateSpace_t
                 ReInitializeSearchStateInfo(searchgoalstate, pSearchStateSpace);
                 }
             }    
-
         }
     }
     }
+
 
     //iterate through predecessors of s
     for (int sind = 0; sind < (int)SuccIDV.size(); sind++) {
@@ -1406,10 +1404,12 @@ int ADPlanner::set_goal(int goal_stateID)
     SBPL_PRINTF("planner: setting goal to %d\n", goal_stateID);
     environment_->PrintState(goal_stateID, true, stdout);
 
+    // Modifications from sbpl
     if (_start_search_ad == false ) {
     _goalsID_ad.push_back(goal_stateID);
     }
-    // std::cout << "_goalsID_ad.size() : " << _goalsID_ad.size() << std::endl;
+
+
 
     if (bforwardsearch) {
         if (SetSearchGoalState(goal_stateID, pSearchStateSpace_) != 1) {
